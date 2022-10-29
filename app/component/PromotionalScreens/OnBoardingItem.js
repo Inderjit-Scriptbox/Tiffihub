@@ -29,7 +29,7 @@ export default function OnBoardingItem({name,text,subText,id,onPress}) {
       ></MaterialCommunityIcons>}
       <AppText style={styles.text}>{text}</AppText>
       <AppText style={styles.subText}>{subText}</AppText>
-      {id==6 && <AppButton title="Get Started" style={{backgroundColor:Colors.primary}} onPress={onPress}/>}
+      {id==6 && <AppButton title="Start" style={{backgroundColor:Colors.primary}} onPress={onPress}/>}
 
     </View>
 </Screen>

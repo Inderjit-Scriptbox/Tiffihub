@@ -4,7 +4,7 @@ import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-import PlansScreen from './PlansScreen';
+import Services from './Services';
 import FaqScreen from './FaqScreen';
 import WelcomeScreen from './WelcomeScreen';
 import Profile from './Profile';
@@ -44,14 +44,16 @@ const HomeScreen = () => {
                         }}
             />
             <Tabs.Screen 
-                name="Plans" 
-                component={PlansScreen}
+                name="Services" 
+                component={Services}
+                
                 options={{
                             tabBarIcon: ({ focused, color, size }) => (
                                 <View>
                                     
                                             <Icon
-                                                name="dollar"
+                                                // name="dollar"
+                                                name="puzzle-piece"
                                                 size={size ? size : 24}
                                                 color={focused ? color : Colors.medium}
                                                 focused={focused}              
@@ -70,16 +72,16 @@ const HomeScreen = () => {
                                     {<View
                                         style={{ backgroundColor: Colors.primary,
                                         color: Colors.medium,
-                                        height: 30,
-                                        width:30,
-                                        borderRadius:15,
+                                        height: 24,
+                                        width:24,
+                                        borderRadius:12,
                                         position: "absolute",
-                                        top:-24,
-                                        left:-24,
+                                        top:-20,
+                                        left:-20,
                                         alignItems: 'center',
                                         justifyContent: 'center',   
                                         }}>
-                                        <AppText style={{fontWeight:"bold",color: Colors.white}}>{counter}</AppText>
+                                        <AppText style={{fontWeight:"bold",color: Colors.white,fontSize:12}}>{counter}</AppText>
                                         </View>}
 
                                                 <Icon
