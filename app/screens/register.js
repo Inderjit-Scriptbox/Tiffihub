@@ -8,6 +8,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import SubmitButton from '../component/SubmitButton/SubmitButton'
 import AppFormField from '../component/AppFormField/AppFormField'
+import signUpApi from '../api/signUpApi'
 
 export default function Register({navigation}) {
   const validationschema = Yup.object().shape(
@@ -18,6 +19,7 @@ export default function Register({navigation}) {
 );
 
 const [isSelected, setSelection] = useState(false);
+const [obj,setObj] = useState();
 
 console.log(isSelected);
   return (
@@ -31,7 +33,14 @@ console.log(isSelected);
     
       <Formik
             initialValues={{email:"",password:""}}
-            onSubmit={(values)=>{navigation.navigate("OtpScreen",values)}}
+            onSubmit= { (values)=>{
+
+                signUpApi(values.email, values.password,isSelected,function (response){
+                    console.log(response["code"])
+                    navigation.navigate("LoginScreen",values)
+                })
+     
+              }}
 
             validationSchema = {validationschema}
             >

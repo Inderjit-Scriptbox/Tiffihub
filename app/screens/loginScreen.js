@@ -1,4 +1,4 @@
-import {Image , ImageBackground,View,StyleSheet,TouchableOpacity ,Dimensions} from 'react-native'
+import {Image , ImageBackground,View,StyleSheet,TouchableOpacity ,Dimensions, Alert} from 'react-native'
 import React from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -7,6 +7,8 @@ import Screen from '../component/Screen/Screen'
 import AppText from "../component/AppText/AppText"
 import SubmitButton from '../component/SubmitButton/SubmitButton'
 import AppFormField from '../component/AppFormField/AppFormField'
+
+import logInApi from '../api/logInApi'
 
 export default function LoginScreen({navigation}) {
   const validationschema = Yup.object().shape(
@@ -18,6 +20,7 @@ export default function LoginScreen({navigation}) {
 
 
   return (
+    
   <ImageBackground style={styles.loginbg} source = {require('../assets/loginbg.png')}>
     
     <Screen style={styles.container}>
@@ -28,7 +31,24 @@ export default function LoginScreen({navigation}) {
     
       <Formik
             initialValues={{email:"",password:""}}
-            onSubmit={(values)=>{navigation.navigate("HomeScreen",values)}}
+
+            onSubmit={(values)=>{
+             
+                  logInApi(values.email, values.password,function (response){
+                  console.log(response["code"]);
+                  if(response["code"]==1)
+                  {
+                    
+                    Alert.alert("Congratulations",response["message"],[{ text: "OK", onPress: () => {console.log("OK Pressed");navigation.navigate("HomeScreen",values); }}]);
+                    
+                  }
+                  else
+                  {
+                    Alert.alert("Error!!!",response["message"]);
+                  }
+                })
+               
+              }}
             validationSchema = {validationschema}
             >
                 {()=>(

@@ -4,12 +4,12 @@
         "slug": "TiffinHubProj",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./app/assets/basic/icon.png",
+        "icon": "./app/assets/basic/logo1.png",
         "userInterfaceStyle": "light",
         "splash": {
-            "image": "./app/assets/basic/splash.png",
+            "image": "./app/assets/basic/SplashText.png",
             "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "backgroundColor": "#FF623F"
         },
         "updates": {
             "fallbackToCacheTimeout": 0

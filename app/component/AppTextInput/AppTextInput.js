@@ -1,7 +1,7 @@
 import { View, Text, TextInput ,StyleSheet,Platform} from 'react-native'
 import React,{useRef} from 'react'
-import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { Fumi } from 'react-native-textinput-effects';
+import {MaterialCommunityIcons,FontAwesomeIcon} from '@expo/vector-icons'
+import { Fumi,Sae } from 'react-native-textinput-effects';
 
 import defaultStyle from './../../config/Style'
 import Colors from '../../config/Colors'
@@ -24,7 +24,19 @@ export default function AppTextInput({icon,...otherProps}) {
       style={{flex: 1,margin:0,}}
       {...otherProps}
   />
-
+{/* <Sae
+    label={label}
+    iconClass={FontAwesomeIcon}
+    iconName={'pencil'}
+    iconColor={'white'}
+    inputPadding={16}
+    labelHeight={24}
+    // active border height
+    borderHeight={2}
+    // TextInput props
+    autoCapitalize={'none'}
+    autoCorrect={false}
+  /> */}
      {/* {icon && <MaterialCommunityIcons
       name = {icon}
       size = {20}

@@ -19,12 +19,14 @@ const Tabs = AnimatedTabBarNavigator();
 
 const HomeScreen = () => {
     var counter = 0;
-    const [data,setData] =useState(NotificationData);
+   
+    const [data,setData] = useState(NotificationData);
     for(let item of data)
     {
         if(item.bool==false) 
         counter++;
     }
+   
     return (
         <Data.Provider value={{data,setData}}>        
         <Tabs.Navigator tabBarOptions={{activeTintColor: Colors.primary,inactiveTintColor:Colors.medium,activeBackgroundColor:"#FFCFC5",shadow:true,floating:true}}>
@@ -69,7 +71,7 @@ const HomeScreen = () => {
                             tabBarIcon: ({ focused, color, size }) => (
                                 <View>
 
-                                    {<View
+                                    {counter==0 && <View
                                         style={{ backgroundColor: Colors.primary,
                                         color: Colors.medium,
                                         height: 24,

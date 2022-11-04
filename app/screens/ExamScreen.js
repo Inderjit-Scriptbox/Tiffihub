@@ -1,44 +1,45 @@
 import React from 'react';
-import {View,Text, StyleSheet,StatusBar,TouchableOpacity} from 'react-native';
+import {View,Text, StyleSheet,StatusBar,TouchableOpacity,SafeAreaView} from 'react-native';
 import Colors from '../config/Colors';
 import { Foundation } from '@expo/vector-icons';
 import AppText from '../component/AppText/AppText';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5,Ionicons } from '@expo/vector-icons';
 
 const Services = ({navigation}) => {
     return (
-        <View style={styles.container}>
-            <AppText style={{fontSize:28,fontWeight:"bold",color: Colors.primary}}>Services</AppText>
+
+        <SafeAreaView style={styles.container}>
+            <TouchableOpacity style={{marginHorizontal:30,alignSelf:"flex-end",marginTop:10}}
+                        onPress={() =>navigation.navigate("HomeScreen")}>
+                        <Ionicons name="ios-arrow-back-outline" size={32} color="black" />
+                    </TouchableOpacity>
+            <AppText style={{fontSize:28,fontWeight:"bold",color: Colors.primary,marginBottom:20}}>{"Exams"}</AppText>
             <View style={{flexDirection:'row'}}>
 
             <TouchableOpacity
                 style={styles.leftContainer}
-                onPress = {()=>navigation.navigate("ExamScreen")}
-             >
-                <Foundation name="clipboard-pencil" size={32} color="black" />
-                <AppText style={{color:Colors.primary,marginTop:5,fontSize:18,fontWeight:"bold"}}>
-                {"Exams"}
-                </AppText>
+                >                
+                <FontAwesome5 name="pencil-alt" size={34} color="black" />                
+                <AppText style={{color:Colors.primary,marginTop:5,fontSize:18,fontWeight:"bold",textAlign:"center"}}>{"Practice Questions"}</AppText>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.rightContainer}
+                onPress = {()=>navigation.navigate("ExamPage")}
              >
-                <FontAwesome5 name="gifts" size={32} color="black" />
-                <AppText style={{color:Colors.primary,marginTop:5,fontSize:18,fontWeight:"bold"}}>
-                {"Gift Cards"}
-                </AppText>
+                <Foundation name="clipboard-pencil" size={34} color="black" />
+                <AppText style={{color:Colors.primary,marginTop:5,fontSize:18,fontWeight:"bold",textAlign:"center"}}>{"Start Examination"}</AppText>
             </TouchableOpacity>
             </View>
 
 
             
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container:{
-        paddingTop:StatusBar.currentHeight+20,
+        paddingTop:StatusBar.currentHeight+10,
         flex: 1,
         alignItems: 'center',
         backgroundColor: Colors.white        
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        padding:30,
+        padding:20,
         margin:"5%",               
         shadowColor: '#000000',
         shadowOffset: {

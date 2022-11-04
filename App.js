@@ -11,6 +11,8 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import Profile from './app/screens/Profile';
 import ResetPassword from './app/screens/ResetPassword';
 import ExamPage from './app/screens/Pages/Services/ExamPage';
+import ExamScreen from './app/screens/ExamScreen';
+
 
 const Stack = createStackNavigator();
 
@@ -25,6 +27,8 @@ const Stack = createStackNavigator();
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen}/>
       <Stack.Screen name="ForgetPasswordScreen" component={ForgetPasswordScreen}/>
       <Stack.Screen name="Profile" component={Profile}/>
+     
+      <Stack.Screen name="ExamScreen" component={ExamScreen}/>
       <Stack.Screen name="ExamPage" component={ExamPage}/>
     </Stack.Navigator>
   )
