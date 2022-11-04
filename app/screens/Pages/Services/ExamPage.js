@@ -43,13 +43,8 @@ const ExamPage = ({navigation}) => {
     const [correctOption,setCorrectOption] = useState();
 
     
-    const [isCorrectOption1,setIsCorrectOption1] = useState(Colors.white);
-    const [isCorrectOption2,setIsCorrectOption2] = useState(Colors.white);
-    const [isCorrectOption3,setIsCorrectOption3] = useState(Colors.white);
-    const [isCorrectOption4,setIsCorrectOption4] = useState(Colors.white);
-    const [isCorrectOption5,setIsCorrectOption5] = useState(Colors.white);
-    const [isCorrectOption6,setIsCorrectOption6] = useState(Colors.white);   
-    
+    const [isCorrectOption,setIsCorrectOption] = useState([Colors.white,Colors.white,Colors.white,Colors.white,Colors.white,Colors.white]);
+
     const [letters,setLetters] = useState(['A','B','C','D','E','F'])
 
     const getData = async () => {
