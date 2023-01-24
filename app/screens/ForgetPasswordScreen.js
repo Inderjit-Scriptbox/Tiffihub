@@ -1,4 +1,4 @@
-import {Image , ImageBackground,View,StyleSheet,TouchableOpacity } from 'react-native'
+import {Image , ImageBackground,View,StyleSheet,TouchableOpacity,Dimensions } from 'react-native'
 import React from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -68,9 +68,11 @@ const ForgetPasswordScreen = ({navigation}) => {
 const styles = StyleSheet.create({
 
     loginbg:{
-        flex: 1,
-        width:"100%",
-        height:"100%",    
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,   
     },
     headText:{
       fontSize:18,

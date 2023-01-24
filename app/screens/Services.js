@@ -8,7 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 const Services = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <AppText style={{fontSize:28,fontWeight:"bold",color: Colors.primary}}>Services</AppText>
+            <AppText style={{fontSize:28,fontWeight:"bold",color: Colors.primary,marginBottom:20}}>Services</AppText>
             <View style={{flexDirection:'row'}}>
 
             <TouchableOpacity
@@ -38,7 +38,7 @@ const Services = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container:{
-        paddingTop:StatusBar.currentHeight+20,
+        paddingTop:20,
         flex: 1,
         alignItems: 'center',
         backgroundColor: Colors.white        

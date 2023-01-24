@@ -8,7 +8,7 @@ function NotificationItem({onPress,image,text,subtext,bool}) {
     <TouchableHighlight onPress={onPress} underlayColor={colors.light} 
     >
 
-        <View style={[styles.container,{backgroundColor:bool?"#F5F5F5":colors.light}]}>
+        <View style={[styles.container,{backgroundColor:bool?colors.medium:colors.light}]}>
             <Image style={styles.img} source={image}/>
             <View style={styles.subcontainer}>
                 <AppText style={{fontWeight:"bold",fontSize:12,color:colors.medium}}>{text}</AppText>

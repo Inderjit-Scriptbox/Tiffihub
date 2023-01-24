@@ -1,18 +1,18 @@
 import { View, Text, TextInput ,StyleSheet,Platform} from 'react-native'
-import React,{useRef} from 'react'
+import React,{useRef,useState} from 'react'
 import {MaterialCommunityIcons,FontAwesomeIcon} from '@expo/vector-icons'
-import { Fumi,Sae } from 'react-native-textinput-effects';
-
+import { Fumi } from 'react-native-textinput-effects';
 import defaultStyle from './../../config/Style'
-import Colors from '../../config/Colors'
+import { FontAwesome } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
 
-
-export default function AppTextInput({icon,...otherProps}) {
+export default function AppTextInput({iconName,label,onBlur,isPassword,...otherProps}) {
   const input = useRef();
+  const [closeEye,setCloseEye] = useState(true);
   return (
   
     <View style={styles.container}>
-    <Fumi
+    {/* <Fumi
       // label={label}
       iconClass={MaterialCommunityIcons}
       // iconName={'email'}
@@ -23,27 +23,35 @@ export default function AppTextInput({icon,...otherProps}) {
       inputPadding={12}
       style={{flex: 1,margin:0,}}
       {...otherProps}
-  />
-{/* <Sae
-    label={label}
-    iconClass={FontAwesomeIcon}
-    iconName={'pencil'}
-    iconColor={'white'}
-    inputPadding={16}
-    labelHeight={24}
-    // active border height
-    borderHeight={2}
-    // TextInput props
-    autoCapitalize={'none'}
-    autoCorrect={false}
   /> */}
-     {/* {icon && <MaterialCommunityIcons
-      name = {icon}
-      size = {20}
-      color = {defaultStyle.Colors.medium}
+
+     {iconName && <MaterialCommunityIcons
+      name = {iconName}
+      size = {24}
+      color={defaultStyle.Colors.primary}
       style = {styles.icon} 
       ></MaterialCommunityIcons>}
-      <TextInput ref={input} style={[defaultStyle.text,{flex:1}]} {...otherProps}/> */}
+
+
+      
+      {isPassword 
+      ? 
+      <TextInput  style={[defaultStyle.text,{flex:1,color:defaultStyle.Colors.secondary}]} placeholder={label} secureTextEntry={closeEye} {...otherProps}/>
+      :
+      <TextInput  style={[defaultStyle.text,{flex:1,color:defaultStyle.Colors.secondary}]} placeholder={label}  {...otherProps}/>
+      }
+
+
+
+
+      {isPassword && (closeEye ?
+      <TouchableOpacity onPress={()=>setCloseEye(!closeEye)}>
+       <FontAwesome name="eye-slash" size={20} color={defaultStyle.Colors.secondary}/>
+       </TouchableOpacity> 
+       :
+       <TouchableOpacity onPress={()=>setCloseEye(!closeEye)}>
+        <FontAwesome name="eye" size={20} color={defaultStyle.Colors.secondary} />
+       </TouchableOpacity>)}
 
     </View>
   )
@@ -56,10 +64,12 @@ const styles = StyleSheet.create({
         borderRadius:5,
         flexDirection:"row",
         borderWidth:2,
-        borderColor:defaultStyle.Colors.medium,
-        width:"95%",
-        margin:"2.5%",
+        borderColor:defaultStyle.Colors.primary,
+        width:"94%",
+        margin:"3%",
         overflow:"hidden",
+        padding:"2%"
+       
     },
     icon:{
         marginRight:10  

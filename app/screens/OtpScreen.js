@@ -14,8 +14,11 @@ const OtpScreen= ({navigation}) => {
     const secondInput = useRef();
     const thirdInput = useRef();
     const fourthInput = useRef();
+    const fifthInput = useRef();
+    const sixthInput = useRef();
+
     const route = useRoute();
-    const [otp,setotp] = useState({1:"",2:"",3:"",4:""});   
+    const [otp,setotp] = useState({"1":"","2":"","3":"","4":"","5":"","6":""});   
     const [flag,setFlag] = useState(true); 
     
     return (
@@ -28,7 +31,7 @@ const OtpScreen= ({navigation}) => {
           <AppText style={styles.text}>An OTP is sent to your registered email {route.params.email}</AppText>
     
 
-          <AppText style={{color: Colors.medium,marginTop:40,marginBottom:10,paddingHorizontal:"10%",fontWeight:"800"}}>Enter OTP</AppText>
+          <AppText style={{color: Colors.secondary,fontSize:20,marginTop:40,marginBottom:20,paddingHorizontal:"5%",fontWeight:"bold"}}>Enter OTP</AppText>
           <View style={{justifyContent: 'space-evenly',flexDirection: 'row'}}>
                 <TextInput
                     ref={firstInput}                    
@@ -36,7 +39,7 @@ const OtpScreen= ({navigation}) => {
                     maxLength = {1}
                     keyboardType = "number-pad"
                     onChangeText = {(text)=>{
-                        setotp({...otp,1:text})
+                        setotp({...otp,"1":text})
                         text && secondInput.current.focus()
                     }}
                 />
@@ -46,7 +49,7 @@ const OtpScreen= ({navigation}) => {
                     maxLength = {1}
                     keyboardType = "number-pad"
                     onChangeText = {(text)=>{
-                        setotp({...otp,2:text})
+                        setotp({...otp,"2":text})
                         text ? thirdInput.current.focus() : firstInput.current.focus();
                     }}
                 />
@@ -56,7 +59,7 @@ const OtpScreen= ({navigation}) => {
                     maxLength = {1}
                     keyboardType = "number-pad"
                     onChangeText = {(text)=>{
-                        setotp({...otp,3:text})
+                        setotp({...otp,"3":text})
                         text ? fourthInput.current.focus() : secondInput.current.focus()
                     }}
                 />
@@ -66,23 +69,47 @@ const OtpScreen= ({navigation}) => {
                     maxLength = {1}
                     keyboardType = "number-pad"
                     onChangeText = {(text)=>{
-                        setotp({...otp,4:text})
-                        !text && thirdInput.current.focus()
+                        setotp({...otp,"4":text})
+                        text ? fifthInput.current.focus() : thirdInput.current.focus()
                     }}
                 />
+                <TextInput
+                    ref={fifthInput}                    
+                    style = {styles.box}
+                    maxLength = {1}
+                    keyboardType = "number-pad"
+                    onChangeText = {(text)=>{
+                        setotp({...otp,"5":text})
+                        text ? sixthInput.current.focus() : fourthInput.current.focus()
+                    }}
+                />
+                <TextInput
+                    ref={sixthInput}                    
+                    style = {styles.box}
+                    maxLength = {1}
+                    keyboardType = "number-pad"
+                    onChangeText = {(text)=>{
+                        setotp({...otp,"6":text})
+                        !text && fifthInput.current.focus()
+                    }}
+                />
+
             </View>
             <TouchableOpacity onPress={()=>console.log("RESEND OTP")}>
-                <AppText style={{color: Colors.primary,marginTop:10,paddingHorizontal:"10%",fontWeight:"800",alignSelf:"flex-end"}}>Resend OTP</AppText>
+                <View style={{alignSelf:"flex-end",marginTop:10,paddingHorizontal:"5%"}}>
+                <AppText style={{color: Colors.primary,fontWeight:"bold",fontSize:16}}>Resend OTP</AppText>
+                </View>
             </TouchableOpacity>
 
            
            <AppButton
             title="Verify OTP"
             onPress={()=>{
-              if(otp["1"] =="1" && otp["2"]=="1" && otp["3"]=="1" && otp["4"]=="1")
-              {                                       
-                navigation.navigate("ResetPassword",{email:route.params.email});
-              }
+              // if(otp["1"] =="1" && otp["2"]=="1" && otp["3"]=="1" && otp["4"]=="1")
+              // {                                       
+              //   navigation.navigate("ResetPassword",{"email":route.params.email});
+              // }
+              console.log(otp["1"]);
               }}
             style = {{marginTop:60}}
             ></AppButton>
@@ -126,12 +153,11 @@ const styles = StyleSheet.create({
     },
     text:{
         textAlign: "center",
-      fontSize:16,
-      fontWeight:"bold",
-      marginTop:20,
-      alignSelf: "center",
-      paddingHorizontal:1
-      
+        fontSize:16,
+        fontWeight:"bold",
+        marginTop:20,
+        alignSelf: "center",
+        paddingHorizontal:1      
     },
     
     box:{

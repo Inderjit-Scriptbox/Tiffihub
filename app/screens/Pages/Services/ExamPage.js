@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {View, StyleSheet,Text,StatusBar,TouchableOpacity,ScrollView,SafeAreaView} from 'react-native';
+import {View, StyleSheet,Text,StatusBar,TouchableOpacity,ScrollView,SafeAreaView,Alert} from 'react-native';
 import AppButton from '../../../component/AppButton/AppButton';
 import { Ionicons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
@@ -15,9 +15,7 @@ import { ActivityIndicator } from 'react-native';
 const ExamPage = ({navigation}) => {
 
 
-    const [index,setIndex] = useState(0);
-   
-
+    const [index,setIndex] = useState(0); 
 
     const [option1,setOption1] = useState();
     const [option2,setOption2] = useState();
@@ -33,14 +31,15 @@ const ExamPage = ({navigation}) => {
 
     const [question,setQuestion] = useState();
     
-
-
+    const [isDisabled,setIsDisabled] = useState(false);
     const [language, setLanguage] = useState("english");
 
     const [myData,setMyData] = useState();
     const [isLoaded,setIsLoaded] = useState(true);
 
     const [correctOption,setCorrectOption] = useState();
+
+    
 
     
     const [isCorrectOption,setIsCorrectOption] = useState([Colors.white,Colors.white,Colors.white,Colors.white,Colors.white,Colors.white]);
@@ -73,6 +72,7 @@ const ExamPage = ({navigation}) => {
                 setOption6(myData["data"][index]["Eng_Option_6"]);
                 setQuestion(myData["data"][index]["Question_English"]);
                 setCorrectOption(myData["data"][index]["Correct_Options"]);
+        
             })
             .catch(function (error) {
             console.log(error);
@@ -84,16 +84,15 @@ const ExamPage = ({navigation}) => {
         }
     }
 
-    useEffect(()=>{getData();},[]);
-    
-    
+    useEffect(()=>{getData();},[]);     
 
-
-        
-        const btnHandler = (index) =>{
+    const btnHandler = (index) =>
+    {
             setIndex(index);
+            setIsDisabled(false);
             setSelectedColor(Colors.white);
             setLetters(['A','B','C','D','E','F']);
+            setLanguage("english");          
             setQuestion(myData["data"][index]["Question_English"]);
             setOption1(myData["data"][index]["Eng_Option_1"]);
             setOption2(myData["data"][index]["Eng_Option_2"]);
@@ -102,11 +101,127 @@ const ExamPage = ({navigation}) => {
             setOption5(myData["data"][index]["Eng_Option_5"]);
             setOption6(myData["data"][index]["Eng_Option_6"]); 
             setCorrectOption(myData["data"][index]["Correct_Options"]);
+            setIsCorrectOption([Colors.white,Colors.white,Colors.white,Colors.white,Colors.white,Colors.white]);
+    }
 
-            setLanguage("english");          
+    const nextHandler = () => {
+        if(index!=(myData["data"].length-1))
+        {
+            setIndex(index+1);
+            setIsDisabled(false);
+            setSelectedColor(Colors.white);
+            if(language=="english")
+            {
+                setQuestion(myData["data"][index+1]["Question_English"]);
+                setOption1(myData["data"][index+1]["Eng_Option_1"]);
+                setOption2(myData["data"][index+1]["Eng_Option_2"]);
+                setOption3(myData["data"][index+1]["Eng_Option_3"]);
+                setOption4(myData["data"][index+1]["Eng_Option_4"]);
+                setOption5(myData["data"][index+1]["Eng_Option_5"]);
+                setOption6(myData["data"][index+1]["Eng_Option_6"]);
+                setLetters(['A','B','C','D','E','F']);
+
+
+            }
+            else if(language=="hindi")
+            {
+
+                setQuestion(myData["data"][index+1]["Question_Hindi"]);
+                setOption1(myData["data"][index+1]["Hindi_Option_1"]);
+                setOption2(myData["data"][index+1]["Hindi_Option_2"]);
+                setOption3(myData["data"][index+1]["Hindi_Option_3"]);
+                setOption4(myData["data"][index+1]["Hindi_Option_4"]);
+                setOption5(myData["data"][index+1]["Hindi_Option_5"]);
+                setOption6(myData["data"][index+1]["Hindi_Option_6"]);
+                setLetters(["क","ख","ग","घ","च","छ"]);
+
+            }
+            else if(language=="punjabi")
+            {
+                setQuestion(myData["data"][index+1]["Question_Punjabi"]);
+                setOption1(myData["data"][index+1]["Punjabi_Option_1"]);
+                setOption2(myData["data"][index+1]["Punjabi_Option_2"]);
+                setOption3(myData["data"][index+1]["Punjabi_Option_3"]);
+                setOption4(myData["data"][index+1]["Punjabi_Option_4"]);
+                setOption5(myData["data"][index+1]["Punjabi_Option_5"]);
+                setOption6(myData["data"][index+1]["Punjabi_Option_6"]);
+                setLetters(["ਓ","ਅ","ੲ","ਸ","ਹ","ਕ"]);
+
+            }   
+            
+            setCorrectOption(myData["data"][index+1]["Correct_Options"]);
+            setIsCorrectOption([Colors.white,Colors.white,Colors.white,Colors.white,Colors.white,Colors.white]);
         }
+        else
+        {
+            let avg = (correctCount/(correctCount+inCorrectCount))*100;
+            if(avg<80)
+            {
+                Alert.alert("You are Failed!!!","You have scored "+avg.toFixed(2)+"% 😥",[{ text: "OK", onPress: () => {console.log("OK Pressed");navigation.navigate("ExamScreen"); }}]);
+            }
+            else{
+                Alert.alert("Congratulation!!","You have scored "+avg.toFixed(2)+"% 🤯",[{ text: "OK", onPress: () => {console.log("OK Pressed");navigation.navigate("ExamScreen"); }}]);
 
-        const  subjectHandler = (lan) => {
+            }
+        }
+    }
+
+    const prevHandler = () => {
+        if(index!=0)    
+        {
+            setIndex(index-1);
+            setIsDisabled(true);
+            setSelectedColor(Colors.white);
+            if(language=="english")
+            {
+                setQuestion(myData["data"][index-1]["Question_English"]);
+                setOption1(myData["data"][index-1]["Eng_Option_1"]);
+                setOption2(myData["data"][index-1]["Eng_Option_2"]);
+                setOption3(myData["data"][index-1]["Eng_Option_3"]);
+                setOption4(myData["data"][index-1]["Eng_Option_4"]);
+                setOption5(myData["data"][index-1]["Eng_Option_5"]);
+                setOption6(myData["data"][index-1]["Eng_Option_6"]);
+                setLetters(['A','B','C','D','E','F']);
+
+
+            }
+            else if(language=="hindi")
+            {
+
+                setQuestion(myData["data"][index-1]["Question_Hindi"]);
+                setOption1(myData["data"][index-1]["Hindi_Option_1"]);
+                setOption2(myData["data"][index-1]["Hindi_Option_2"]);
+                setOption3(myData["data"][index-1]["Hindi_Option_3"]);
+                setOption4(myData["data"][index-1]["Hindi_Option_4"]);
+                setOption5(myData["data"][index-1]["Hindi_Option_5"]);
+                setOption6(myData["data"][index-1]["Hindi_Option_6"]);
+                setLetters(["क","ख","ग","घ","च","छ"]);
+
+            }
+            else if(language=="punjabi")
+            {
+                setQuestion(myData["data"][index-1]["Question_Punjabi"]);
+                setOption1(myData["data"][index-1]["Punjabi_Option_1"]);
+                setOption2(myData["data"][index-1]["Punjabi_Option_2"]);
+                setOption3(myData["data"][index-1]["Punjabi_Option_3"]);
+                setOption4(myData["data"][index-1]["Punjabi_Option_4"]);
+                setOption5(myData["data"][index-1]["Punjabi_Option_5"]);
+                setOption6(myData["data"][index-1]["Punjabi_Option_6"]);
+                setLetters(["ਓ","ਅ","ੲ","ਸ","ਹ","ਕ"]);
+
+            }   
+            setCorrectOption(myData["data"][index-1]["Correct_Options"]);
+            setIsCorrectOption([Colors.white,Colors.white,Colors.white,Colors.white,Colors.white,Colors.white]);
+        }
+        else
+        {
+            setIsDisabled(true);
+        }
+    }
+
+
+    const  subjectHandler = (lan) => 
+    {
             if(lan=="english")
             {
                 setQuestion(myData["data"][index]["Question_English"]);
@@ -145,18 +260,29 @@ const ExamPage = ({navigation}) => {
                 setLetters(["ਓ","ਅ","ੲ","ਸ","ਹ","ਕ"]);
 
             }   
-        }
+    }
 
 
-        const checkHandler = (id) => 
-        {
+    const checkHandler = (id) => 
+    {
             if(correctOption==id)
             {
-                setSelectedColor("green");
+                const obj = isCorrectOption;
+                obj[id-1] = "green";
+                setIsCorrectOption(obj);
+                // setSelectedColor("green");
+                setCorrectCount(correctCount+1);
+                setIsDisabled(true);
             }
             else
             {
-                setSelectedColor("red")
+                const obj = isCorrectOption;
+                obj[id-1] = "red";
+                obj[correctOption-1] = "green";
+                setIsCorrectOption(obj);
+                setInCorrectCount(inCorrectCount+1);
+                setIsDisabled(true);
+                // setSelectedColor("red")
             }
             
         }
@@ -165,26 +291,25 @@ const ExamPage = ({navigation}) => {
         return ( 
         isLoaded?
         (
-            <SafeAreaView style={{flex:1,alignItems: 'center',justifyContent: 'center'}}>
-                <ActivityIndicator size="large" color={Colors.primary}/>        
+            <SafeAreaView style={{flex:1,alignItems: 'center',justifyContent: 'center',backgroundColor:Colors.white}}>
+                <AppText style={{fontSize:24,fontWeight:"bold",color:Colors.primary,marginBottom:20}}>Loading...</AppText>
+                <Image source={require('../../../assets/gif/loading.gif')}/>
+       
             </SafeAreaView>
         )
         :   
         (
             <SafeAreaView style={styles.container}>
                 <ScrollView >
-                    <TouchableOpacity style={{marginHorizontal:30,alignSelf:"flex-end",marginTop:10}}
-                        onPress={() =>navigation.navigate("HomeScreen")}>
-                        <Ionicons name="ios-arrow-back-outline" size={32} color="black" />
-                    </TouchableOpacity>
+                    
                     <AppText style={styles.headers}>Examination Page</AppText>
                 
                     <View style={styles.indexContainer}>    
                         <View>
                             <ScrollView style={{height:300,padding:5}} nestedScrollEnabled>
                                 <View style = {styles.btncontainer}>
-                                    {myData["data"].map((item, index) =>
-                                    <AppButton key={index} title={index+1} style={[styles.countbtn,{}]} onPress={() => btnHandler(index)}/>)}
+                                    {myData["data"].map((item, id) =>
+                                    <AppButton isDisabled={true} key={id} title={id+1} textstyle={{color:index==id?"black":"white"}} style={[styles.countbtn,{backgroundColor:index==id?"#87CEEB":Colors.primary}]} onPress={() => btnHandler(id)}/>)}
                                 </View>
                             </ScrollView>
                         </View>
@@ -236,67 +361,77 @@ const ExamPage = ({navigation}) => {
                     </View>
     
                 
-                    {option1!=null && <View style={[styles.whiteContainer,{backgroundColor:selectedColor}]}>                    
+                    {option1!=null && <View style={[styles.whiteContainer,{backgroundColor:isCorrectOption[0]}]}>                    
                         <View style={styles.primaryContainer}>
                             <AppText style={{fontWeight:"bold",color: Colors.white,fontSize:18}}>{letters[0]}.</AppText>    
                         </View>
-                        <TouchableOpacity style={{flex:1}} onPress={() => {checkHandler(1);}}>
+                        <TouchableOpacity style={{flex:1}} disabled={isDisabled} onPress={() => {checkHandler(1);}}>
                             
-                                <AppText style={{flex:1,padding:5,color:selectedColor!=Colors.white?Colors.white:"black"}}>{option1}</AppText>
+                                <AppText style={{flex:1,padding:5,color:isCorrectOption[0]!=Colors.white?Colors.white:"black"}}>{option1}</AppText>
                             
                         </TouchableOpacity>
                     </View>}
     
-                    {option2!=null && <View style={[styles.whiteContainer,{backgroundColor:selectedColor}]}>                    
+                    {option2!=null && <View style={[styles.whiteContainer,{backgroundColor:isCorrectOption[1]}]}>                    
                         <View style={styles.primaryContainer}>
                             <AppText style={{fontWeight:"bold",color: Colors.white,fontSize:18}}>{letters[1]}.</AppText>    
                         </View>
-                        <TouchableOpacity style={{flex:1}} onPress={() => {checkHandler(2);}}>                           
-                            <AppText style={{flex:1,padding:5,color:selectedColor!=Colors.white?Colors.white:"black"}}>{option2}</AppText>
+                        <TouchableOpacity style={{flex:1}} disabled={isDisabled} onPress={() => {checkHandler(2);}}>                           
+                            <AppText style={{flex:1,padding:5,color:isCorrectOption[1]!=Colors.white?Colors.white:"black"}}>{option2}</AppText>
                         </TouchableOpacity>
                     </View>}
     
-                    {option3!=null && <View style={[styles.whiteContainer,{backgroundColor:selectedColor}]}>                    
+                    {option3!=null && <View style={[styles.whiteContainer,{backgroundColor:isCorrectOption[2]}]}>                    
                         <View style={styles.primaryContainer}>
                             <AppText style={{fontWeight:"bold",color: Colors.white,fontSize:18}}>{letters[2]}.</AppText>    
                         </View>
-                        <TouchableOpacity style={{flex:1}} onPress={() => {checkHandler(3);}}>                            
-                            <AppText style={{flex:1,padding:5,color:selectedColor!=Colors.white?Colors.white:"black"}}>{option3}</AppText>                            
+                        <TouchableOpacity style={{flex:1}} disabled={isDisabled} onPress={() => {checkHandler(3);}}>                            
+                            <AppText style={{flex:1,padding:5,color:isCorrectOption[2]!=Colors.white?Colors.white:"black"}}>{option3}</AppText>                            
                         </TouchableOpacity>
                     </View>}
     
-                   {option4!=null && <View style={[styles.whiteContainer,{backgroundColor:selectedColor}]}>                    
+                   {option4!=null && <View style={[styles.whiteContainer,{backgroundColor:isCorrectOption[3]}]}>                    
                         <View style={styles.primaryContainer}>
                             <AppText style={{fontWeight:"bold",color: Colors.white,fontSize:18}}>{letters[3]}.</AppText>    
                         </View>
-                        <TouchableOpacity style={{flex:1}} onPress={() => {checkHandler(4);}}>                            
-                            <AppText style={{flex:1,padding:5,color:selectedColor!=Colors.white?Colors.white:"black"}}>{option4}</AppText>                            
+                        <TouchableOpacity style={{flex:1}} disabled={isDisabled} onPress={() => {checkHandler(4);}}>                            
+                            <AppText style={{flex:1,padding:5,color:isCorrectOption[3]!=Colors.white?Colors.white:"black"}}>{option4}</AppText>                            
                         </TouchableOpacity>
                     </View>}
 
-                    {option5!=null && <View style={[styles.whiteContainer,{backgroundColor:selectedColor}]}>                    
+                    {option5!=null && <View style={[styles.whiteContainer,{backgroundColor:isCorrectOption[4]}]}>                    
                         <View style={styles.primaryContainer}>
                             <AppText style={{fontWeight:"bold",color: Colors.white,fontSize:18}}>{letters[4]}.</AppText>    
                         </View>
-                        <TouchableOpacity style={{flex:1}} onPress={() => {checkHandler(5);}}>                            
-                            <AppText style={{flex:1,padding:5,color:selectedColor!=Colors.white?Colors.white:"black"}}>{option5}</AppText>                            
+                        <TouchableOpacity style={{flex:1}} disabled={isDisabled} onPress={() => {checkHandler(5);}}>                            
+                            <AppText style={{flex:1,padding:5,color:isCorrectOption[4]!=Colors.white?Colors.white:"black"}}>{option5}</AppText>                            
                         </TouchableOpacity>
                     </View>}
 
-                    {option6!=null && <View style={[styles.whiteContainer,{backgroundColor:selectedColor}]}>                    
+                    {option6!=null && <View style={[styles.whiteContainer,{backgroundColor:isCorrectOption[5]}]}>                    
                         <View style={styles.primaryContainer}>
                             <AppText style={{fontWeight:"bold",color: Colors.white,fontSize:18}}>{letters[5]}.</AppText>    
                         </View>
-                        <TouchableOpacity style={{flex:1}} onPress={() => {checkHandler(6);}}>                            
-                            <AppText style={{flex:1,padding:5,color:selectedColor!=Colors.white?Colors.white:"black"}}>{option6}</AppText>                           
+                        <TouchableOpacity style={{flex:1}} disabled={isDisabled} onPress={() => {checkHandler(6);}}>                            
+                            <AppText style={{flex:1,padding:5,color:isCorrectOption[5]!=Colors.white?Colors.white:"black"}}>{option6}</AppText>                           
                         </TouchableOpacity>
                     </View>}
                 
+                    <View style={{marginBottom:20}}></View>
+
+                    <View style = {{flexDirection:"row",paddingHorizontal:5,marginTop:10,marginHorizontal:"5%",alignSelf: "center"}}>
+                            <AppButton style = {{width:"40%",marginHorizontal:"10%",borderRadius:10,backgroundColor:Colors.medium}}  title="Previous" isDisabled={true}
+                                    onPress={()=>{
+                                        prevHandler();
+                                    }}/>
+                            <AppButton style = {{width:"40%",marginHorizontal:"10%",borderRadius:10}}  title={(index!=(myData["data"].length-1)) ?"Next":"Submit"} 
+                            onPress={()=>{                                
+                                nextHandler();
+                            }}/>
+                                  
+                    </View>
+
                     <View style={{marginBottom:40}}></View>
-
-                    <AppButton style={{}}/>
-
-                    <View style={{marginBottom:60}}></View>
                 
                 </ScrollView>
             </SafeAreaView>
@@ -307,14 +442,15 @@ const ExamPage = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container:{               
-        paddingTop:StatusBar.currentHeight+15,       
+              
     },
     countbtn:{
-        width:"14%",
+        width:"20%",
         margin:"1.5%",
         padding:10,
-        borderWidth:2,
-        borderColor:Colors.primary
+        borderRadius:10,
+        borderWidth:3,
+        borderColor: "red"
     },
     btncontainer:{
         flexDirection: "row",
@@ -375,6 +511,7 @@ const styles = StyleSheet.create({
         elevation: 5,         
     },
     headers:{
+        paddingTop:20,
         color:Colors.primary,
         fontSize:28,
         fontWeight:"bold",

@@ -36,8 +36,18 @@ console.log(isSelected);
             onSubmit= { (values)=>{
 
                 signUpApi(values.email, values.password,isSelected,function (response){
-                    console.log(response["code"])
-                    navigation.navigate("LoginScreen",values)
+                  console.log(response);
+                    if(response["code"]==1)
+                    {
+                        Alert.alert("Congratulation!!",response["message"],[{ text: "OK", onPress: () => {navigation.navigate("LoginScreen"); }}]);
+
+                    }
+                    else
+                    {
+                      Alert.alert("Error!!!",response["message"],[{ text: "OK", onPress: () => {navigation.navigate("LoginScreen"); }}]);
+
+                    }
+                   
                 })
      
               }}

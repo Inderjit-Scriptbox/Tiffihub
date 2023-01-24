@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useState} from 'react';
 import {SafeAreaView, StyleSheet,StatusBar,FlatList,Platform} from 'react-native';
 
 
@@ -6,15 +6,16 @@ import NotificationItem from '../component/ListItem/NotificationItem'
 import colors from '../config/Colors'
 
 
-import {Data} from './HomeScreen'
+import Data from '../data/NotificationData';
 
 
 const NotificationScreen = () => {
-    const data = useContext(Data);
+    // const data = useContext(Data);
     // console.log(data.data);
+    const [data,setData] = useState(Data);
     const onSelect = (ind) =>{
         const tempData = [];
-        data.data.map((item)=>{
+        data.map((item)=>{
             if(item.id===ind.id)
             {
                 console.log(item);
@@ -27,12 +28,12 @@ const NotificationScreen = () => {
             
         });
         // console.log(tempData);
-        data.setData(tempData);
+        setData(tempData);
     }
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
-                    data={data.data}
+                    data={data}
                     keyExtractor = {(item)=>item.id}
                     
                     renderItem =  {({item}) => 
@@ -54,7 +55,7 @@ const NotificationScreen = () => {
 const styles = StyleSheet.create({
     container:{
         flex:1,       
-        paddingTop:Platform.OS === "android"? StatusBar.currentHeight:0,
+        paddingTop:10,
         backgroundColor:colors.white,  
     
    }

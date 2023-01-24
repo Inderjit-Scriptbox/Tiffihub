@@ -12,7 +12,7 @@ import logInApi from '../api/logInApi'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function LoginScreen({navigation}) {
+export default function WelcomeBackLogin({navigation}) {
   const validationschema = Yup.object().shape(
     {
         email:Yup.string().required().email().label("Email"),
@@ -20,10 +20,10 @@ export default function LoginScreen({navigation}) {
     }
 );
 
-const storeData = async () => {
+const storeData = async (value) => {
   try {
-    await AsyncStorage.setItem('promo', "false");
-    console.log("Boolean stored successfully");
+    console.log("ID stored successfully: "+value);
+    await AsyncStorage.setItem('id', value);
   } catch (e) {
     // saving error
   }
@@ -46,8 +46,9 @@ const storeData = async () => {
                   if(response["code"]==1)
                   {
                     console.log(response);
-                    storeData();
-                    navigation.navigate("HomeScreen",{"data":response["data"]});
+                    storeData(response["data"]["id"]);
+                
+                    navigation.navigate("HomeScreen",values);
                     
                   }
                   else
@@ -76,10 +77,9 @@ const storeData = async () => {
                             autoCorrect={false}
                             iconName="lock"
                             label="Password"
-                            
+                            secureTextEntry
                             textContentType="password"
-                            name="password"
-                            isPassword={true}>
+                            name="password">
                         </AppFormField>
                         
                         <TouchableOpacity onPress={()=>navigation.navigate("ForgetPasswordScreen")}>
@@ -104,11 +104,11 @@ const storeData = async () => {
 }
 const styles = StyleSheet.create({
     loginbg:{
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
         
       
     },

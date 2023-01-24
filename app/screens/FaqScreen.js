@@ -34,7 +34,7 @@ const FaqScreen = () => {
     return (
        
         <SafeAreaView style={styles.container}>            
-                <AppText style={styles.headText}>Frequently Asked Questions</AppText>
+                {/* <AppText style={styles.headText}>Frequently Asked Questions</AppText> */}
                 <FlatList
                     data={faq}
                     keyExtractor = {(item)=>item.id}
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     container:{
          flex:1,
          backgroundColor:"#ffe4df",         
-         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight:0,
+        
     },
     headText:{
         fontWeight:"600",

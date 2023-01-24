@@ -9,27 +9,28 @@ const Services = ({navigation}) => {
     return (
 
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={{marginHorizontal:30,alignSelf:"flex-end",marginTop:10}}
+            {/* <TouchableOpacity style={{marginHorizontal:30,alignSelf:"flex-end",marginTop:10}}
                         onPress={() =>navigation.navigate("HomeScreen")}>
                         <Ionicons name="ios-arrow-back-outline" size={32} color="black" />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
             <AppText style={{fontSize:28,fontWeight:"bold",color: Colors.primary,marginBottom:20}}>{"Exams"}</AppText>
-            <View style={{flexDirection:'row'}}>
+            
 
             <TouchableOpacity
                 style={styles.leftContainer}
+                onPress = {()=>navigation.navigate("G1Description")}
                 >                
-                <FontAwesome5 name="pencil-alt" size={34} color="black" />                
-                <AppText style={{color:Colors.primary,marginTop:5,fontSize:18,fontWeight:"bold",textAlign:"center"}}>{"Practice Questions"}</AppText>
+                <FontAwesome5 name="pencil-alt" size={50} color="black" />                
+                <AppText style={{color:Colors.primary,marginTop:30,fontSize:20,fontWeight:"bold",textAlign:"center"}}>{"G1 Description"}</AppText>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.rightContainer}
                 onPress = {()=>navigation.navigate("ExamPage")}
              >
-                <Foundation name="clipboard-pencil" size={34} color="black" />
-                <AppText style={{color:Colors.primary,marginTop:5,fontSize:18,fontWeight:"bold",textAlign:"center"}}>{"Start Examination"}</AppText>
+                <Foundation name="clipboard-pencil" size={50} color="black" />
+                <AppText style={{color:Colors.primary,marginTop:30,fontSize:20,fontWeight:"bold",textAlign:"center"}}>{"G1 Examination"}</AppText>
             </TouchableOpacity>
-            </View>
+           
 
 
             
@@ -39,10 +40,10 @@ const Services = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container:{
-        paddingTop:StatusBar.currentHeight+10,
         flex: 1,
         alignItems: 'center',
-        backgroundColor: Colors.white        
+        backgroundColor: Colors.white,
+        paddingTop:20       
     },
     countbtn:{
         width:"12%",
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
     },
     leftContainer:{
         backgroundColor:Colors.white,                
-        width:"35%",
+        width:200,
+        height:200,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
@@ -80,7 +82,8 @@ const styles = StyleSheet.create({
     rightContainer:{
         backgroundColor:Colors.white, 
         margin:"5%",
-        width:"35%",
+        width:200,
+        height:200,
         padding:20,
         alignItems: 'center',
         justifyContent: 'center',

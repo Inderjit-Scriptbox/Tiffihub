@@ -10,7 +10,7 @@ async function signUpApi(email,password,promotion_email_opt_out,callback)
 
         var config = {
         method: 'post',
-        url: 'https://apis.tiffinhub.ca/tiffin_api/signup?',
+        url: 'https://tifinapi.tiffinhub.ca/tiffin_api/signup?',
         headers: { 
             'Content-Type': 'application/json'
         },

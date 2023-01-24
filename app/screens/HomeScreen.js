@@ -1,34 +1,27 @@
-import React,{createContext,useState} from 'react';
+import React,{createContext} from 'react';
 import {StyleSheet,View} from 'react-native';
 import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar'
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
 import Services from './Services';
-import FaqScreen from './FaqScreen';
 import WelcomeScreen from './WelcomeScreen';
-import Profile from './Profile';
-import NotificationScreen from './NotificationScreen';
-import NotificationData from '../data/NotificationData';
+import ProfileScreen from './ProfileScreen';
 import Colors from '../config/Colors';
-import AppText from '../component/AppText/AppText';
+import { useRoute } from '@react-navigation/native';
 
 
-export const Data = createContext();
 const Tabs = AnimatedTabBarNavigator();
 
-const HomeScreen = () => {
-    var counter = 0;
-   
-    const [data,setData] = useState(NotificationData);
-    for(let item of data)
-    {
-        if(item.bool==false) 
-        counter++;
-    }
-   
+export const DATA = createContext();
+
+
+const HomeScreen = () => 
+{      
+    
+    const route = useRoute();
+
     return (
-        <Data.Provider value={{data,setData}}>        
+           
+        <DATA.Provider value={route.params.data}>
         <Tabs.Navigator tabBarOptions={{activeTintColor: Colors.primary,inactiveTintColor:Colors.medium,activeBackgroundColor:"#FFCFC5",shadow:true,floating:true}}>
 
             <Tabs.Screen 
@@ -44,6 +37,7 @@ const HomeScreen = () => {
                                             />
                                         )
                         }}
+              
             />
             <Tabs.Screen 
                 name="Services" 
@@ -64,57 +58,11 @@ const HomeScreen = () => {
                                         )
                         }} 
             />        
-            <Tabs.Screen 
-                name="Notification" 
-                component={NotificationScreen}
-                options={{
-                            tabBarIcon: ({ focused, color, size }) => (
-                                <View>
-
-                                    {counter==0 && <View
-                                        style={{ backgroundColor: Colors.primary,
-                                        color: Colors.medium,
-                                        height: 24,
-                                        width:24,
-                                        borderRadius:12,
-                                        position: "absolute",
-                                        top:-20,
-                                        left:-20,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',   
-                                        }}>
-                                        <AppText style={{fontWeight:"bold",color: Colors.white,fontSize:12}}>{counter}</AppText>
-                                        </View>}
-
-                                                <Icon
-                                                    name="bell"
-                                                    size={size ? size : 24}
-                                                    color={focused ? color : Colors.medium}
-                                                    focused={focused}
-               
-                                                />
-                                </View>
-                                )
-                        }} 
-            />
-            <Tabs.Screen 
-                name="FAQs" 
-                component={FaqScreen}
-                options={{
-                            tabBarIcon: ({ focused, color, size }) => (
-                                                <Icon
-                                                    name="question"
-                                                    size={size ? size : 24}
-                                                    color={focused ? color : Colors.medium}
-                                                    focused={focused}
-               
-                                                />
-                                        )
-                        }} 
-            />
+            
+            
             <Tabs.Screen 
                 name="Profile" 
-                component={Profile}
+                component={ProfileScreen}
                 options={{
                             tabBarIcon: ({ focused, color, size }) => (
                                                 <Icon
@@ -126,8 +74,9 @@ const HomeScreen = () => {
                                         )
                         }}
             />        
-        </Tabs.Navigator>      
-        </Data.Provider>
+        </Tabs.Navigator>  
+        </DATA.Provider>    
+       
     );
 }
 
